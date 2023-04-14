@@ -1,0 +1,78 @@
+tGET ["][G][e][t]["]   
+tSET ["][S][e][t]["]  
+tFUNCTION ["][F][u][n][c][t][i][o][n]["] 
+tPRINT ["][P][r][i][n][t]["] 
+tFOR ["][F][o][r]["] 
+tIF ["][I][f]["] 
+tRETURN ["][R][e][t][u][r][n]["] 
+tCOMMA [,]
+tPLUS ["][+]["]
+tMUL ["][*]["]
+tINC ["][+][+]["]
+tLBRAC [[]
+tGT ["][>]["]
+tGEQ ["][>][=]["]
+tEQUALITY ["][=][=]["]
+tMINUS ["][-]["]
+tDIV ["][/]["]
+tDEC ["][-][-]["]
+tRBRAC []]
+tLT ["][<]["]
+tLEQ ["][<][=]["]
+tIDENT ["][_a-zA-Z]+[a-zA-Z0-9]*["]
+tNUM [+-]?[0]*[0-9]+[.]?[0-9]+
+tSTRING ['][!-z]+[']
+
+
+%{ 
+    int line = 1; 
+%}
+
+%%
+
+\n line++;
+{tGET} {printf("%d tGET\n",line);}
+{tSET} {printf("%d tSET\n",line);}
+{tFUNCTION} {printf("%d tFUNCTION\n",line);}
+{tPRINT} {printf("%d tPRINT\n",line);}
+{tFOR} {printf("%d tFOR\n",line);}
+{tIF} {printf("%d tIF\n",line);}
+{tRETURN} {printf("%d tRETURN\n",line);}
+{tCOMMA} {printf("%d tCOMMA\n", line);}
+{tPLUS} {printf("%d tPLUS\n",line);}
+{tMUL} {printf("%d tMUL\n",line);}
+{tINC} {printf("%d tINC\n",line);}
+{tLBRAC} {printf("%d tLBRAC\n",line);}
+{tGT} {printf("%d tGT\n",line);}
+{tGEQ} {printf("%d tGEQ\n",line);}
+{tEQUALITY} {printf("%d tEQUALITY\n",line);}
+{tMINUS} {printf("%d tMINUS\n",line);}
+{tDIV} {printf("%d tDIV\n",line);}
+{tDEC} {printf("%d tDEC\n",line);}
+{tRBRAC} {printf("%d tRBRAC\n",line);}
+{tLT} {printf("%d tLT\n",line);}
+{tLEQ} {printf("%d tLEQ\n",line);}
+{tIDENT} {
+    memmove(yytext, yytext+1, strlen(yytext));
+    yytext[strlen(yytext)-1] = '\0';
+    printf("%d tIDENT (%s)\n", line, yytext); 
+    }
+{tNUM} {
+    printf("%d tNUM (%s) \n",line, yytext);   
+    }
+{tSTRING} {
+    memmove(yytext, yytext+1, strlen(yytext));
+    yytext[strlen(yytext)-1] = '\0';
+    printf("%d tSTRING (%s)\n", line, yytext);
+    }
+
+
+. ;
+
+%%
+
+int main()
+{
+yylex();
+return(0);
+}
